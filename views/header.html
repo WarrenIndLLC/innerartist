@@ -1,0 +1,110 @@
+<div class="product-bar-section">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-4  col-md-4 col-sm-3">
+                <div class="product-title-bar">
+                    <h1>{{title}}</h1>
+                </div>
+            </div>
+            <div class="col-lg-2 col-md-2 col-sm-3">
+                <div class="how-it-works">
+                    <h2>Art You Want</h2>
+                    <a data-fancybox data-src="#how-it-works" href="javascript:;" class="btn">How it works?</a>
+                    <div style="display: none;" id="how-it-works">
+                        <h2>How it works?</h2> 
+                        <p>How does the Art Cart work? The Art Cart is separate from the Shopping Cart on Inner Artist. The Art Cart is the area where you can hold all the different types of art you like, and then select each one to be printed on products you want. <br>  <br>
+
+                        The Art Cart makes it easy for you to toggle between diefferent pieces of art for the same product to be printed on to see which one you like best. After you’ve selected a piece of art to be printed on a product, you can then add that product to the Shopping Cart to go through the checkout process.
+                        </p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-6  col-md-6 col-sm-6" style="overflow: hidden;max-height: 100px;">
+                <div class="add-cart-slider">
+                    <div class="multiple-items">
+                        <div ng-if="cartItem.length==0" style="text-align: center;">
+                            <h4>Apparently…you don’t want any artwork</h4>
+                            <p style="margin-left: 60px;"><a href="#/artwork">Go Find Some</a> | <a href="{{baseurl}}#/dashboard/albums">Go Create Some</a></p>
+                        </div>
+                        <div ng-if="!cartItem.length==0" ng-repeat="cartItems in cartItem" style="margin-top: 10px;float: left;margin-left: 10px;" ng-click="viewArtDetails(cartItems)">
+                            <a data-fancybox data-src="#viewArtDetails" href="javascript:;">
+                                <img class="img-responsive" src="{{baseurl}}uploads/{{cartItems.user_id}}/{{cartItems.art_id}}/{{ cartItems.file_name }}" style="height: 83px;" />
+                            </a>
+                        </div>
+                        <div style="display: none;" id="viewArtDetails">
+                            <div class="row">
+                                <div class="col-lg-5">
+                                    <div class="viewart-image">
+                                        <img class="img-responsive" ng-if="artDetails.file_name" src="{{baseurl}}uploads/{{artDetails.user_id}}/{{artDetails.art_id}}/{{artDetails.file_name }}"/>                                        
+                                        <img class="img-responsive" ng-if="!artDetails.file_name" src="assets/img/viewart-image.jpg"/>
+                                    </div>
+                                </div>
+                                <div class="col-lg-7">
+                                    <div class="viewart-text">
+                                        <h2>{{artDetails.name}}</h2>
+                                        <p>This piece adds a [mark up percentage here]% mark up to the base price of a product. <br> <br>
+                                        Add this art to your “Art Cart” by clicking on the button below. What is an Art Cart? It’s a separate cart where you can hold the different types of art that you’d like to see what they’d look like on different products.
+                                        <br> <br>
+                                        The Art Cart is displayed under the main menu in the grey Page Title Bar.</p>
+                                        <button ng-click="redirectToProduct(0);" style="float:left">Print on Product</button>
+                                        <button style="float:right" ng-click="removeFromCart(artDetails.id);">Remove from Art Cart</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- <div style="display: none;" id="artAddedSuccessMessage">
+    <div class="row">
+        <div class="viewart-image">
+            <p>This artwork has been successfully added to your Art Cart. To place the art on a product, go to the product page you'd like artwork to be printed on, and then select the piece of art from the Art Cart to get started.</p>
+        </div>
+    </div>
+</div> -->
+
+<div style="display: none;" id="showBigImage">
+    <div class="row">
+        <div class="viewart-image">
+            <img class="img-responsive" ng-if="image.file_name" src="{{baseurl}}uploads/{{image.photo_user_id}}/{{image.photo_id}}/{{image.file_name}}" style="width: 361px;height: 272px;" />
+            <img class="img-responsive" ng-if="!image.file_name" src="assets/img/viewart-image.jpg"/>
+        </div>
+    </div>
+</div>
+
+
+<div style="display: none;" id="artDetailsModel">
+    <div  ng-show="artLoader" class="spinner" id="preloader"></div>
+    <div class="row">
+        <div class="col-lg-6">
+            <div class="viewart-image" ng-click="openImage(artworkDetails)">
+                <a data-fancybox data-src="#showBigImage" href="javascript:;"><img class="img-responsive" ng-if="artworkDetails.file_name" src="{{baseurl}}uploads/{{artworkDetails.user_id}}/{{artworkDetails.id}}/{{artworkDetails.file_name}}" alt="image"/></a>
+                <img class="img-responsive" ng-if="!artworkDetails.file_name" src="assets/img/viewart-image.jpg" alt="image"/>
+            </div>
+        </div>
+        <div class="col-lg-6">
+            <div class="viewart-text">
+                <h2>{{artworkDetails.name}}</h2>
+                <p>This piece adds a [mark up percentage here]% mark up to the base price of a product. <br> <br>
+                Add this art to your “Art Cart” by clicking on the button below. What is an Art Cart? It’s a separate cart where you can hold the different types of art that you’d like to see what they’d look like on different products.
+                The Art Cart is displayed under the main menu in the grey Page Title Bar.</p>
+                <div class="row" style="margin-top: 20px;">
+                    <div class="col-md-6 col-xs-6 col-sm-6">
+                        <img ng-if="!artworkDetails.is_liked" class="img-responsive" src="assets/img/Favorites.png" style="width: 20px;    cursor: pointer;" ng-click="markAsFavorites(artworkDetails.id,1);"/>
+                        <img ng-if="artworkDetails.is_liked" class="img-responsive" src="assets/img/fill-heart.png" style="width: 20px;    cursor: pointer;" ng-click="markAsFavorites(artworkDetails.id,0);"/>
+                    </div>
+                    
+                    <div ng-if="!artworkDetails.addedTOCart" ng-click="addCart(artworkDetails.id)" class="col-md-6 col-xs-6 col-sm-6" style="text-align:right">
+                        <a class="btn btn-primary mb-2" data-fancybox data-src="#artAddedSuccessMessage" href>Add To Cart</a>
+                    </div>
+                    <div ng-if="artworkDetails.addedTOCart" class="col-md-6 col-xs-6 col-sm-6" style="text-align:right">
+                        <a class="btn btn-primary mb-2" disabled href>Add To Cart</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

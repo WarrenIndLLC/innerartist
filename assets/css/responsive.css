@@ -1,0 +1,246 @@
+/* For Mobile */
+@media (max-width: 768px) {
+.mainmenu{display:none;}
+.mobile-button {
+  padding: 10px;
+}
+.slider-content-right {
+  padding-top: 60px;
+}
+.slider-section {
+  text-align: center;
+}
+.slider-content-right {
+  padding-left: 0;
+}
+h1 {
+  font-size: 26px !important;
+}
+.latest-creation-heading > h3::after {
+  left: 7.5%;
+}
+.latest-creation-heading > h3 {
+  margin: 0 auto;
+  width: 200px;
+}
+.new-design > p {
+  font-size: 18px;
+}
+.single-latestcreation {
+  margin: 0 auto;
+  padding-bottom: 40px;
+  width: 220px;
+}
+.user {
+  padding-left: 13%;
+}
+.blog-post {
+  padding-bottom: 30px;
+}
+.banner-image img {
+  padding-bottom: 30px;
+}
+.shop-artist-heading > h2 {
+  text-align: center;
+}
+.artist {
+  padding-bottom: 50px;
+  margin: 0 auto;
+  text-align: center;
+  width: 220px;
+}
+.artist-id.clearfix {
+  padding: 0 0 15px 20px;
+}
+.view-gallery {
+  margin-top: 30px;
+}
+.call-home-left {
+  padding-bottom: 30px;
+}
+.call-home-right input {
+  float: left;
+  margin-right: 10px;
+  width: 67%;
+}
+
+
+
+/*Products*/
+
+.product-bar-section {
+  padding: 30px 0;
+  text-align: center;
+}
+.product-title-bar > h1 {
+  padding-bottom: 15px;
+}
+.add-cart-slider {
+  margin: 20px auto 0;
+  width: 80%;
+}
+.how-it-works {
+  float: none;
+}
+.slick-initialized .slick-slide {
+  margin: 0 0 0 7px;
+}
+.single-product {
+  margin: 0 auto 60px;
+  position: relative;
+  width: 260px;
+}
+.sale {
+  left: 25px;
+  top: 20px;
+}
+.related-products > h3 {
+  padding-bottom: 10px;
+  text-align: center;
+}
+.single-product-details > h1 {
+  padding: 30px 0 20px;
+}
+.view-artwork a {
+  padding: 10px 74px;
+}
+
+
+
+}
+/* For Tab */
+@media (min-width: 768px) {
+.mainmenu ul li a {
+  padding: 0 25px;
+}
+.latest-creation-heading > h3 {
+  margin: 0 auto;
+  width: 200px;
+}
+.latest-creation-heading > h3::after {
+  left: 7.5%;
+}
+.user {
+  padding-left: 0;
+}
+.blog-post-details {
+  padding: 0 10px;
+}
+.artist-id.clearfix {
+  padding: 0 0 30px 29px;
+}
+.how-it-works {
+  padding-top: 20px;
+}
+.product-title-bar {
+  padding-top: 20px;
+}
+.view-artwork a {
+  padding: 10px 24px;
+}
+.single-product {
+  margin-bottom: 20px;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+}
+/*Medium*/
+@media (min-width: 992px) {
+.mainmenu ul li a {
+  padding: 0 58px;
+}
+.user {
+  padding-left: 45px;
+}
+.blog-post-details {
+  padding: 0 60px;
+}
+.artist-id.clearfix {
+  padding: 0 0 30px 70px;
+}
+.how-it-works {
+  padding-top: 0;
+}
+.product-title-bar {
+  padding-top: 0;
+}
+.view-artwork a {
+  padding: 10px 75px;
+}
+.single-product {
+  margin-bottom: 0;
+}
+
+
+
+
+
+
+
+}
+
+/* For large Screen */
+@media (min-width: 1200px) {
+.mainmenu ul li a {
+  padding: 0 0px 0px 116px;
+  text-transform: capitalize;
+}
+.user {
+  padding-left: 0;
+}
+.blog-post-details {
+  padding: 0 60px;
+}
+.artist-id.clearfix {
+  padding: 0 0 10px 70px;
+}
+.how-it-works {
+  padding-top: 0;
+}
+.product-title-bar {
+  padding-top: 0;
+}
+.view-artwork a {
+  padding: 10px 75px;
+}
+.single-product {
+  margin-bottom: 0;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+}
+
+
+
+.activemenus{
+      font-weight: bold !important;
+    color: #f29f61!important;
+}
+
+.breadcumb-section.ng-scope {
+    padding: 40px 0;
+    min-height: 250px;
+}

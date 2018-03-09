@@ -1,0 +1,458 @@
+<div ng-include="'views/header.html'"></div>           
+<div class="cart-content-section" ng-if="productCart.length==0 && !message">
+  <div class="container">
+    <div class="row">
+      <div class="col-lg-12">
+        <div class="cart-content clearfix">
+          <div class="empty-cart">
+            <p>Your cart is currently empty.</p>
+          </div>
+          <div class="return-to-shop">
+            <a href="#/products"><img class="img-responsive" src="assets/img/cart-icon.jpg" alt="image"/> Return to shop</a>
+          </div>
+        </div>
+        <div class="return-button">
+          <a href="#/products">Return to shop</a>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<div class="cart-content-section" ng-if="message">
+  <div class="container">
+    <div class="row">
+      <div class="col-lg-12">
+        <div class="cart-content clearfix">
+          <!-- <div class="empty-cart">
+            <p>Your cart is currently empty.</p>
+          </div>
+          <div class="return-to-shop">
+            <a href="#/products"><img class="img-responsive" src="assets/img/cart-icon.jpg" alt="image"/> Return to shop</a>
+          </div> -->
+          <div class="alert alert-success">
+            <strong>Success!</strong> {{message}}
+          </div>
+        </div>
+        <div class="return-button">
+          <a href="#/products">Return to shop</a>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<div ng-if="!message">
+<div class="cart-content-section" ng-if="productCart.length>0 && !placeorder">
+  <form name="form" ng-submit="confirmOrder()">
+  <div class="container">
+    <div class="row">
+      <div class="col-lg-12">
+        <div class="item-on-your-cart clearfix">
+          
+          <h2>You Have {{productCart.length}} Items In Your Cart</h2>                           
+          <table class="shop_table">
+            <thead>
+              <tr>
+                <th class="product-price">Product</th>
+                <th class="product-price">Art Image</th>
+                <th class="product-name">Title</th>
+                <th class="product-price">Price</th>
+                <th class="product-price">Shipping</th>
+                <th class="product-quantity">Quantity</th>
+                <th class="product-subtotal">Total</th>
+                <th class="product-remove">&nbsp;</th>
+              </tr>
+              </thead>
+            <tbody>
+              <tr  ng-repeat="cartItems in productCart">
+                <th class="product-price">
+                  <div class="product-name-img">
+                    <img ng-if="cartItems.top_layer_image" class="img-responsive cart-image" src="{{cartItems.top_layer_image}}"/>
+                    <img ng-if="!cartItems.top_layer_image" class="img-responsive cart-image" src="assets/img/ProductArchivePlaceholder.jpg"/>
+                  </div>
+                </th>
+                <th class="product-price">
+                  <div class="product-name-img">
+                    <img class="img-responsive  cart-image" ng-if="cartItems.art_id.file_name" src="{{baseurl}}uploads/{{cartItems.art_id.user_id}}/{{cartItems.art_id.art_id}}/{{cartItems.art_id.file_name}}" />
+                    <img class="img-responsive  cart-image" ng-if="!cartItems.art_id.file_name" src="assets/img/ProductArchivePlaceholder.jpg"/>
+                  </div>
+                </th>
+                <th class="product-name">
+                  <div class="product-name-img">
+                    <p>{{cartItems.title}}</p>
+                  </div>
+                </th>
+                <th class="product-price">
+                  <div class="price">
+                    <p>${{cartItems.price}}</p>
+                  </div>
+                </th>
+                <th class="product-price">
+                  <div class="price">
+                    <p>${{cartItems.flat_rate}}</p>
+                  </div>
+                </th>
+                <th class="product-quantity">
+                  <div class="quantity">
+                    <div class="quantity buttons_added">
+                      <input type="button" class="minus" value="-" ng-disabled="cartItems.quantity<2" ng-click="doMinus(cartItems);">
+                      <input class="input-number" type="text" ng-model="cartItems.quantity" readonly>
+                      <input type="button" class="plus" value="+" ng-click="doAddItem(cartItems);">
+                    </div>
+                  </div>
+                </th>
+                <th class="product-subtotal">
+                  <div class="total">
+                    <p>${{cartItems.total}}</p>
+                  </div>
+                </th>
+                <td class="product-remove">
+                  <a class="remove" href ng-click="deleteCartItem(cartItems)">×</a>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-lg-6 col-md-6 col-sm-6">
+        <div class="calculate-shipping clearfix">
+          <h2>Calculate shipping </h2>
+          <div class="form-group">
+            <select class="form-control" id="shipping_country" ng-model="formData.shipping_country" required>
+              <option value="">Select Country</option>
+              <option value="United States">United States</option>
+              <option value="Canada">Canada</option>
+            </select>
+          </div>
+          <div class="form-group half-width">
+            <input type="text" class="form-control" placeholder="State" ng-model="formData.shipping_state" style="margin-left:0" required>
+          </div>
+          <div class="form-group half-width">
+            <input type="text" class="form-control" placeholder="Zip Code" ng-model="formData.shipping_zipcode" required>
+          </div>
+          <!-- <a class="update-totals-btn" href>update totals</a> -->
+        </div>
+        <div class="calculate-shipping clearfix">
+          <h2>Have A Promotional Code?</h2>
+          <form class="form-inline" >
+            <div ng-show="errorMsg" class="alert alert-danger alert-dismissable">
+                <button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
+                {{errorMsg}}
+            </div>
+            <div ng-show="msg" class="alert alert-success alert-dismissable">
+                <button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
+                {{msg}}
+            </div>
+            <div class="form-group seventy-width">
+              <input type="text" class="form-control" placeholder="32801" ng-model="promoCode.coupon_code">
+            </div>
+            <div class="apply-button">
+              <a href ng-click="doApplyCoupon(promoCode.coupon_code)">apply coupon</a>
+            </div>
+          </form>
+        </div>
+      </div>
+      <div class="col-lg-6 col-md-6 col-sm-6">
+        <div class="cart-totals">
+          <h2>Cart totals</h2>
+          <table class="cart-total">
+            <tbody>
+              <tr class="cart-subtotal">
+                <th>Subtotal</th>
+                <td data-title="Subtotal">${{total}}</td>
+              </tr>
+              <tr class="shipping">
+                  <th>Shipping</th>
+                  <td data-title="Shipping">Flate rate:$ {{shipping_fee}} </td>
+              </tr>               
+              <tr class="order-total">
+                <th>Total</th>
+                <td data-title="Total">${{net_total}}</td>
+              </tr>                                    
+            </tbody>
+          </table>
+          <div class="update-checkout-btn clearfix"><!--  ng-if="authUser" -->
+              <input type="submit" class="placeorder-bottom" value="Proceed to checkout" ng-disabled="form.$dirty && form.$invalid || loader">
+          </div>
+          <!-- <div class="update-checkout-btn clearfix" ng-if="!authUser">
+              <a href="{{baseurl}}#/login" class="placeorder-bottom">Proceed to checkout</a>
+          </div> -->
+        </div>
+      </div>
+    </div>
+  </div>
+    </form>
+</div>
+
+<div class="checkout-section" ng-if="placeorder">
+   <div class="container">
+       <div class="row" ng-if="!authUser">
+           <div class="col-lg-12">
+               <div class="returning-customer">
+                   <p><img class="img-responsive" src="assets/img/icon.jpg" alt="image"/>Returning customer?<a href=""> Click here to login</a></p>
+               </div>
+           </div>                       
+       </div>
+       <div class="row">
+            <div class="container"> 
+                <!-- <div class="promotional-area clearfix">  
+                    <div class="col-lg-6">
+                        <div class="promotional-code-full-left">
+                             <h2>Have A Promotional Code?</h2>
+                        </div>
+                    </div>
+                    <div class="col-lg-6">
+                        <div class="promotional-code-full-right">
+                            <form action="/action_page.php" class="form-inline">
+                              <div class="form-group seventy-width">
+                              <input type="text" placeholder="32801" class="form-control">
+                            </div>
+                            <div class="apply-button">
+                                <a href="">apply coupon</a>
+                            </div>
+                            </form>
+                        </div>
+                    </div>
+                </div> -->
+            </div>
+       </div>
+       <div class="row" >
+        <div class="alert alert-danger" ng-if="errormessage">
+                            <strong>Warning!</strong> {{errormessage}}
+                        </div>
+
+           <div class="col-lg-3 col-md-3 col-sm-3">
+               <div class="checkout-menu">
+                   <ul>
+                       <li ng-class="{'active' : showPagename == ''}" ng-click="showCheckoutBilling();"><a href>Billing Address</a></li>
+                       <li ng-if="step>1" ng-class="{'active' : showPagename=='showShipping'}"  ng-click="showCheckoutShipping();"><a href>Shipping Address</a></li>
+                       <li ng-if="step>2" ng-class="{'active' : showPagename=='showReview'}"  ng-click="showReviewPayment();"><a href>Review & Payment</a></li>
+
+                       <li ng-if="step<2"><a href style="border-bottom: 1px solid #2D2D2D;color: #333333;">Shipping Address</a></li>
+                       <li ng-if="step<3"><a href style="border-bottom: 1px solid #2D2D2D;color: #333333;">Review & Payment</a></li>
+                   </ul>
+               </div>
+           </div>
+           <div class="col-lg-9 col-md-9 col-sm-3" ng-if="showPagename==''">
+               <div class="billing-address">
+                   <h2>Billing details</h2>
+                   <form ng-submit="updateBilling(billing)">
+                      <div class="form-group">
+                        <label for="first_name">First Name*</label>
+                        <input type="text" class="form-control " id="first_name" placeholder="" ng-model="billing.first_name" required>
+                      </div>
+                      <div class="form-group">
+                        <label for="last_name">Last Name*</label>
+                        <input type="text" class="form-control" id="last_name" placeholder="" ng-model="billing.last_name" required> 
+                      </div>
+                      <div class="form-group">
+                        <label for="company">Company Name</label>
+                        <input type="text" class="form-control" id="company" placeholder="" ng-model="billing.company" required>
+                      </div>
+                      <div class="form-group">
+                          <label for="country">Country*</label>
+                          <select id="country" class="form-control" ng-model="billing.country" required>
+                            <option value=""></option>
+                            <option value="United States">United States</option>
+                            <option value="Canada">Canada</option>
+                          </select>
+                      </div>
+                      <div class="form-group">
+                        <label for="city">Town/City*</label>
+                        <input type="text" class="form-control" id="city" placeholder="" ng-model="billing.city" required>
+                      </div>
+                      <div class="form-group">
+                        <label for="state">State*</label>
+                        <input type="text" class="form-control" id="state" placeholder="" ng-model="billing.state" required>
+                      </div>
+                      <div class="form-group">
+                        <label for="zip">Zip*</label>
+                        <input type="text" class="form-control" id="zip" placeholder="" ng-model="billing.zip" required>
+                      </div>
+                      <div class="form-group">
+                        <label for="phone">Phone*</label>
+                        <input type="text" class="form-control" id="phone" placeholder="" ng-model="billing.phone" required>
+                      </div>
+                      <div class="form-group">
+                        <label for="email">Email*</label>
+                        <input type="email" class="form-control" id="email" placeholder="" ng-model="billing.email" required>
+                      </div>
+                      <div class="continue-btn">
+                          <!-- <a href ng-click="updateBilling()">Continue</a> -->
+                          <input type="submit" class="continue-btn" value="Continue" ng-disabled="form.$dirty && form.$invalid || loader">
+                      </div>
+                    </form>
+               </div>
+           </div>
+       
+       <!-- </div> -->
+       <!--checkout1 Section Start -->
+
+           <div class="col-lg-9 col-md-9 col-sm-3" ng-if="showPagename=='showShipping'">
+               <form ng-submit="updateShipping(shipping)">
+               <div class="billing-address">
+                  
+                   <h2>
+                    <label>
+                    <input type="checkbox" name="is_ship_diff" ng-model="shipping.is_ship_diff" value="1" style="float: left;margin-top: -6px;width: 17px;margin-right: 10px;">Ship to a different address?</label></h2>
+                      <div class="form-group" ng-if="shipping.is_ship_diff">
+                        <label for="first_name">First Name*</label>
+                        <input type="text" class="form-control " id="first_name" placeholder="" ng-model="shipping.first_name" required>
+                      </div>
+                      <div class="form-group" ng-if="shipping.is_ship_diff">
+                        <label for="last_name">Last Name*</label>
+                        <input type="text" class="form-control" id="last_name" placeholder="" ng-model="shipping.last_name" required>
+                      </div>
+                      <div class="form-group" ng-if="shipping.is_ship_diff">
+                        <label for="company">Company Name</label>
+                        <input type="text" class="form-control" id="company" placeholder="" ng-model="shipping.company" required>
+                      </div>
+                      <div class="form-group" ng-if="shipping.is_ship_diff">
+                          <label for="country">Country*</label>
+                          <select id="country" class="form-control" ng-model="shipping.country" required>
+                            <option>Select Country</option>
+                            <option value="United States">United States</option>
+                            <option value="Canada">Canada</option>
+                          </select>
+                      </div>
+                      <div class="form-group" ng-if="shipping.is_ship_diff">
+                        <label for="city">Town/City*</label>
+                        <input type="text" class="form-control" id="city" placeholder="" ng-model="shipping.city" required>
+                      </div>
+                      <div class="form-group" ng-if="shipping.is_ship_diff">
+                          <label for="state">State*</label>
+                          <input type="text" class="form-control" id="state" placeholder="" ng-model="shipping.state" required>
+                      </div>
+                      <div class="form-group" ng-if="shipping.is_ship_diff">
+                        <label for="zip">Zip*</label>
+                        <input type="text" class="form-control" id="zip" placeholder="" ng-model="shipping.zip" required>
+                      </div>
+                      <div class="form-group">
+                        <label for="notes">Order notes</label>
+                        <textarea  class="form-control" cols="30" rows="3" placeholder="Notes about your order. e.g. special notes for delivery." ng-model="shipping.order_note" required></textarea>
+                      </div>
+
+                      <div class="continue-btn">
+                          <!-- <a href ng-click="updateShipping()">Continue</a> -->
+                          <input type="submit" class="continue-btn" value="Continue" ng-disabled="form.$dirty && form.$invalid || loader">
+                      </div>
+          
+                    
+               </div>
+               </form>
+           </div>
+   
+<!--checkout Section Start -->
+
+<!--checkout2 Section Start -->
+           
+           <div class="col-lg-9 col-md-9 col-sm-9" ng-if="showPagename=='showReview'">
+                <div class="billing-address">
+                  <table class="shop_table">
+                    <thead>
+                      <tr>
+                        <th class="product-price">Product</th>
+                        <th class="product-price">Art Image</th>
+                        <th class="product-name">Title</th>
+                        <th class="product-price">Price</th>
+                        <th class="product-price">Shipping</th>
+                        <th class="product-quantity">Quantity</th>
+                        <th class="product-subtotal">Total</th>
+                        <th class="product-remove">&nbsp;</th>
+                      </tr>
+                      </thead>
+                    <tbody>
+                      <tr  ng-repeat="cartItems in productCart">
+                        <th class="product-price">
+                          <div class="product-name-img">
+                            <img ng-if="cartItems.top_layer_image" class="img-responsive cart-image" src="{{cartItems.top_layer_image}}"/>
+                            <img ng-if="!cartItems.top_layer_image" class="img-responsive cart-image" src="assets/img/ProductArchivePlaceholder.jpg"/>
+                          </div>
+                        </th>
+                        <th class="product-price">
+                          <div class="product-name-img">
+                            <img class="img-responsive  cart-image" ng-if="cartItems.art_id.file_name" src="{{baseurl}}uploads/{{cartItems.art_id.user_id}}/{{cartItems.art_id.art_id}}/{{cartItems.art_id.file_name}}" />
+                            <img class="img-responsive  cart-image" ng-if="!cartItems.art_id.file_name" src="assets/img/ProductArchivePlaceholder.jpg"/>
+                          </div>
+                        </th>
+                        <th class="product-name">
+                          <div class="product-name-img">
+                            <p>{{cartItems.title}}</p>
+                          </div>
+                        </th>
+                        <th class="product-price">
+                          <div class="price">
+                            <p>${{cartItems.price}}</p>
+                          </div>
+                        </th>
+                        <th class="product-price">
+                          <div class="price">
+                            <p>${{cartItems.flat_rate}}</p>
+                          </div>
+                        </th>
+                        <th class="product-quantity">
+                           <div class="price">
+                            <p>{{cartItems.quantity}}</p>
+                          </div>
+                        </th>
+                        <th class="product-subtotal">
+                          <div class="total">
+                            <p>${{cartItems.total}}</p>
+                          </div>
+                        </th>
+                        <td class="product-remove">
+                          <a class="remove" href ng-click="deleteCartItem(cartItems)">×</a>
+                        </td>
+                      </tr>
+                    </tbody>
+                  </table>
+                  <table class="cart-total">
+                    <tbody>
+                      <tr class="cart-subtotal">
+                        <th>Subtotal</th>
+                        <td data-title="Subtotal">${{total}}</td>
+                      </tr>
+                      <tr class="shipping">
+                        <th>Shipping</th>
+                        <td data-title="Shipping">Flate rate:$ {{shipping_fee}} </td>
+                      </tr>               
+                      <tr class="order-total">
+                        <th>Total</th>
+                        <td data-title="Total">${{net_total}}</td>
+                      </tr>                                           
+                    </tbody>
+                  </table>
+                <div class="credit-card clearfix">
+                  <p>Credit card</p>
+                  <img class="img-responsive" src="assets/img/credit-card.jpg" alt="image"/>
+                </div>
+                  <div class="card-details">
+                     <p>Pay securely using your credit card.</p>
+                     <form name="form" ng-submit="doPayment();">
+                        <div class="form-group">
+                          <label for="fname">Card Number*</label>
+                          <input type="text" class="form-control" id="cardnumber" name="cardnumber" ng-model="formData.cardnumber" placeholder=".... .... ...." required>
+                        </div>
+                        <div class="form-group">
+                          <label for="fname">Expiration(MM/YYYY)*</label>
+                          <input type="text" class="form-control" id="expdate" name="expdate" ng-model="formData.expdate" placeholder="MM/YY" required>
+                        </div>
+                        <div class="form-group">
+                          <label for="fname">Card security code*</label>
+                          <input type="text" class="form-control" id="cvv" name="cvv" ng-model="formData.cvv" placeholder="CVV" required>
+                        </div>
+                        <div class="continue-btn">
+                            <input type="submit" class="continue-btn" value="Continue" ng-disabled="form.$dirty && form.$invalid || loader">
+                        </div>
+
+                        
+                      </form>
+                    </div>
+               </div>
+           </div>
+    </div>
+   </div>
+</div>
+</div>
+<div ng-include="'views/footer.html'"></div>

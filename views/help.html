@@ -1,0 +1,61 @@
+<div ng-include="'views/header.html'"></div>
+
+<div class="breadcumb-section">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-12">
+                <div class="product-breadcumbs">
+                    <div class="col-md-12 col-xs-12 col-sm-11" style="padding: 20px;background-color: #ebebeb;">
+                        <center><h3>Let us help you</h3></center>  
+                        <div class="col-md-12 col-xs-12 col-sm-11" style="padding: 20px 0;">
+                            <div class="col-md-11" style="padding-left: 0;">
+                                <input type="text" class="form-control" name="search">
+                            </div>
+                            <div class="col-md-1" style="text-align: right;padding-right: 0;">
+                                <button class="btn btn-primary">Search</button>
+                            </div>
+                            
+                        </div>
+                        <div class="col-md-12 col-xs-12 col-sm-12" style="background-color: white;padding: 23px 10px 15px 40px;height: 300px;">
+                            <h2>Support Topics</h2>
+                            <center><h4 style="margin-top: 54px;">FAQs are listed here in searchable form with titles and short excerts</h4></center>
+                            <center><p style="    margin-top: 139px;color: #f38533;">View all FAQs</p></center>
+                        </div>
+                    </div> 
+                    <div class="col-md-12 col-xs-12 col-sm-11" style="padding: 25px;background-color: #ebebeb;margin-top: 25px;padding-bottom: 0;">
+                         <form method="post" ng-submit="contactUs()">
+                            <div >
+                                <div class="form-group">
+                                     <input type="email" class="form-control" id="inputEmail3" > 
+                                </div>
+                                <div class="form-group">
+                                    <input type="text" class="form-control" id="name" name="name" ng-model="formData.name">
+                                </div>
+                                <div class="form-group">
+                                    <input type="email" class="form-control" id="email" name="email" ng-model="formData.email" >
+                                    <p>A brief issue of your ticket</p>
+                                </div>
+                                <div class="form-group">
+                                    <textarea  class="form-control" id="tell_more" name="tell_more" ng-model="formData.tell_more" rows="5"></textarea>
+                                    <p>Describe your issue here in details</p>
+                                </div>
+                                <div class="form-group">
+                                    <button type="submit" class="btn btn-primary mb-2">Backs</button>
+                                    <button type="submit" class="btn btn-primary mb-2">Next</button>
+                                </div>
+                            </div>
+                        </form> 
+                    </div> 
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!--Breadcumb Section Start -->
+<div ng-include="'views/footer.html'"></div>
+<style type="text/css">
+.breadcumb-section.ng-scope {
+    padding: 40px 0;
+    min-height: 250px;
+}
+</style>

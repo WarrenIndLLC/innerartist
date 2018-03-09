@@ -1,0 +1,55 @@
+<div ng-include="'views/header.html'"></div>
+<div class="breadcumb-section">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-12">
+                <div class="product-breadcumbs">
+                    <ol class="breadcrumb">
+                         <img class="img-responsive" src="assets/img/filter.jpg" alt="image"/>
+                      <li><a href>Filter Artwork</a></li>
+                      <li class="active">Showing 1-8 of 30 results</li>
+                    </ol>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-lg-3 col-md-3 col-sm-3">
+               <div class="product-filter">
+                   <div class="form-group">
+                        <select class="form-control" ng-model="size">
+                            <option value>Sort by</option>
+                            <option value="7200x4896">3:2</option>                                    
+                            <option value="7200x5414">4:3</option>
+                            <option value="7200x7200">4:4</option>
+                            <option value="5760x7200">4:5</option>
+                        </select>
+                    </div>
+               </div>                                
+            </div>
+        </div>
+        <div class="row">
+            <div dir-paginate="artwork in artworks | filter:size |itemsPerPage:12" ng-show="artwork" class="col-lg-3 col-md-3 col-sm-3" style="    margin-bottom: 50px;">
+                <div class="single-product">
+                    <div class="" style="height: 260px;max-height: 260px">
+                        <img class="img-responsive" src="{{baseurl}}uploads/{{artwork.user_id}}/{{artwork.id}}/{{artwork.file_name}}"/>
+                    </div>
+                    <div class="product-name-price">
+                        <p>{{artwork.name}}</p>
+                    </div>
+                     <div class="view-artwork" ng-click="openArtWork(artwork)">
+                        <a data-fancybox data-src="#artDetailsModel" href="javascript:;" class="btn">view artwork</a>
+                    </div>
+                </div>                            
+            </div>
+        </div>
+        <div ng-if="artworks.length==0" class="errorrecordnotfound">Record not found</div>
+        <div class="row">
+            <div class="col-lg-12">
+                <div class="paginations">
+                    <dir-pagination-controls max-size="5" direction-links="true" boundary-links="true"></dir-pagination-controls>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div ng-include="'views/footer.html'"></div>

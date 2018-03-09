@@ -1,0 +1,308 @@
+<style type="text/css">
+.selectedborer{
+    border: 1px solid #e26c08;
+}
+.arterror{
+    color: #e3661f;float: left;width: 100%;margin-top: 8px;font-size: 14px;
+}
+</style>
+<div ng-include="'views/header.html'"></div>
+<div class="single-product-page-section">
+    <div class="container">
+        <div class="row" ng-if="showPagename=='simpleProduct'" style="margin:15px;">
+            <div class="col-lg-6">
+                <div class="single-product-image">
+                    <img class="img-responsive" ng-if="singleProduct.top_layer_image" src="{{singleProduct.top_layer_image}}" style="width: 500px;height: 500px;"/>
+                    <img class="img-responsive" ng-if="!singleProduct.top_layer_image" src="assets/img/SingleProductPlaceholder.jpg "/>
+                </div>
+            </div>
+            <div class="col-lg-6">
+                <div class="single-product-details">
+                    <h1>{{singleProduct.title}}</h1>
+                    <h3>${{singleProduct.price}} / Base Cost</h3>
+                    <p>{{singleProduct.custom_description}}</p>
+                    <h5>You must have a piece of artwork selected and placed on this product to be able to add it to cart.</h5>
+                    <a data-fancybox data-src="#modal2" href="javascript:;" class="btn">find artwork</a>
+                    <a href class="btn" ng-if="singleProduct.addedTOCart" disabled>Add to Cart</a>
+                    <a href class="btn" ng-click="productAddToCart(singleProduct);" ng-if="!singleProduct.addedTOCart" >Add to Cart</a>
+                    <span ng-if="errorMsg && !selectedArt.id" class="arterror">{{errorMsg}}</span>
+                    <div style="display: none;" id="modal2">
+                        <div class="product-bar-section" style="padding: 10px 0;">
+                            <div class="container">
+                                <div class="row">
+                                    <div class="col-lg-4 col-md-4 col-sm-3">
+                                        <div class="product-title-bar">
+                                            <h1>artwork</h1>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="breadcumb-section">
+                            <div class="container">
+                                <div class="row">
+                                    <div class="col-lg-3 col-md-3 col-sm-3">
+                                        <div class="product-breadcumbs">
+                                            <ol class="breadcrumb">
+                                              <img class="img-responsive" src="assets/img/filter.jpg"/>
+                                              <li><a href>Filter Artwork</a></li>
+                                            </ol>
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-3 col-md-3 col-sm-3">
+                                       <div class="product-filter breadcrumb">
+                                           <div class="form-group">
+                                                <select class="form-control" ng-model="size">
+                                                    <option value>Sort by</option>
+                                                    <option value="7200x4896">3:2</option>                                    
+                                                    <option value="7200x5414">4:3</option>
+                                                    <option value="7200x7200">4:4</option>
+                                                    <option value="5760x7200">4:5</option>
+                                                </select>
+                                            </div>
+                                       </div>                                
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div ng-if="cartItem.length==0" style="text-align: center;" class="ng-scope">
+                                        <h4>Apparently…you don’t want any artwork</h4>
+                                        <p style="margin-left: 60px;"><a href="#/artwork">Go Find Some</a> | <a href="innerartist/#/dashboard/albums">Go Create Some</a></p>
+                                    </div>
+                                    <div dir-paginate="artwork in cartItem | filter:size | itemsPerPage:12" ng-show="cartItem" class="col-lg-3 col-md-3 col-sm-3" ng-click="selectArts(artwork);">
+                                        <div class="single-product" ng-class="{'selectedborer' : selectedArt.id ==artwork.id}">
+                                            <img class="img-responsive" ng-if="artwork.file_name" src="{{baseurl}}uploads/{{artwork.user_id}}/{{artwork.art_id}}/{{artwork.file_name}}" />
+                                            <img class="img-responsive" ng-if="!artwork.file_name" src="assets/img/ProductArchivePlaceholder.jpg"/>
+                                            <div class="product-name-price">
+                                                <h3>20% Cost Added To Print</h3>
+                                            </div>
+                                             <div class="view-artwork" ng-click="viewArtWorkDetails(artwork)">
+                                                <a data-fancybox data-src="#artwork_details" href="javascript:;" class="btn">view artwork</a>
+                                            </div>
+                                        </div>                            
+                                    </div>
+                                    <div ng-show="(cartItem |filter:size).length == 0 && cartItem.length>0" style="text-align: center;">
+                                      <span class="errorrecordnotfound">Record Not found</span>
+                                    </div>
+                                    <div style="display: none;" id="artwork_details">
+                                        <div  ng-show="artLoader" class="spinner" id="preloader"></div>
+                                        <div class="row">
+                                            <div class="col-lg-6">
+                                                <div class="viewart-image" ng-click="openImage(artWorkDetails)">
+                                                    <a data-fancybox data-src="#modalnew" href="javascript:;">
+                                                        <img class="img-responsive" ng-if="artWorkDetails.file_name" src="{{baseurl}}uploads/{{artWorkDetails.user_id}}/{{artWorkDetails.art_id}}/{{artWorkDetails.file_name}}" />
+                                                    </a>
+                                                    <img class="img-responsive" ng-if="!artWorkDetails.file_name" src="assets/img/viewart-image.jpg"/>
+                                                </div>
+                                            </div>
+                                            <div class="col-lg-6">
+                                                <div class="single-product-details">
+                                                    <h2>{{artWorkDetails.name}}</h2>
+                                                    <p>This piece adds a [mark up percentage here]% mark up to the base price of a product. <br> <br>
+                                                    Add this art to your “Art Cart” by clicking on the button below. What is an Art Cart? It’s a separate cart where you can hold the different types of art that you’d like to see what they’d look like on different products.
+                                                    <br> <br>
+                                                    The Art Cart is displayed under the main menu in the grey Page Title Bar.</p>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div style="display: none;width: unset;" id="modalnew">
+                                        <div class="row">
+                                            <div class="viewart-image">
+                                                <img class="img-responsive" ng-if="image.file_name" src="{{baseurl}}uploads/{{image.user_id}}/{{image.art_id}}/{{image.file_name}}"/>
+                                                <img class="img-responsive" ng-if="!image.file_name" src="assets/img/viewart-image.jpg"/>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-lg-12">
+                                        <div class="paginations" style="color: unset;">
+                                            <dir-pagination-controls max-size="5" direction-links="true" boundary-links="true" style="background-color: unset;border-color: unset;"></dir-pagination-controls>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div style="display: none;width: unset;" id="modalcrop">
+            <div class="row">gtffffffffvb   
+                <div class="viewart-image">{{selectedArt}}
+                    <img class="img-responsive" ng-if="image.file_name" src="{{baseurl}}uploads/{{image.user_id}}/{{image.art_id}}/{{image.file_name}}"/>
+                    <img class="img-responsive" ng-if="!image.file_name" src="assets/img/viewart-image.jpg"/>
+                </div>
+            </div>
+        </div>
+        <div class="row" ng-if="showPagename=='canvasProduct'" style="margin:15px;">
+            <div class="col-lg-6">
+                <div class="single-product-image">
+                    <img class="img-responsive" ng-if="singleProduct.top_layer_image" src="{{singleProduct.top_layer_image}}" style="width: 500px;height: 500px;"/>
+                    <img class="img-responsive" ng-if="!singleProduct.top_layer_image" src="assets/img/SingleProductPlaceholder.jpg "/>
+                </div>
+            </div>
+            <div class="col-lg-6">
+                <div class="single-product-details">
+                    <h1>{{singleProduct.title}}</h1>
+                    <h3>${{singleProduct.price}} / Base Cost</h3>
+                    <p>{{singleProduct.custom_description}}</p>
+                    <h5>You are currently holding art in your Art Cart. Click on the Place Art button to select the art to crop and fir for this product.</h5>
+                    <a data-fancybox data-src="#place_art" href="javascript:;" class="btn">Place Art</a>
+                    <div style="display: none;" id="place_art">
+                        <div class="product-bar-section" style="padding: 10px 0;">
+                            <div class="container">
+                                <div class="row">
+                                    <div class="col-lg-4 col-md-4 col-sm-3">
+                                        <div class="product-title-bar">
+                                            <h1>artwork</h1>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="breadcumb-section">
+                            <div class="container">
+                                <div class="row">
+                                    <div class="col-lg-3 col-md-3 col-sm-3">
+                                        <div class="product-breadcumbs">
+                                            <ol class="breadcrumb">
+                                              <img class="img-responsive" src="assets/img/filter.jpg"/>
+                                              <li><a href>Filter Artwork</a></li>
+                                            </ol>
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-3 col-md-3 col-sm-3">
+                                       <div class="product-filter breadcrumb" >
+                                           <div class="form-group">
+                                                <select class="form-control" ng-model="size">
+                                                    <option value>Sort by</option>
+                                                    <option value="7200x4896">3:2</option>                                    
+                                                    <option value="7200x5414">4:3</option>
+                                                    <option value="7200x7200">4:4</option>
+                                                    <option value="5760x7200">4:5</option>
+                                                </select>
+                                            </div>
+                                       </div>                                
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div ng-if="cartItem.length==0" style="text-align: center;" class="ng-scope">
+                                        <h4>Apparently…you don’t want any artwork</h4>
+                                        <p style="margin-left: 60px;"><a href="#/artwork">Go Find Some</a> | <a href="innerartist/#/dashboard/albums">Go Create Some</a></p>
+                                    </div>
+                                    <div dir-paginate="artwork in cartItem | filter:size | itemsPerPage:12" ng-show="cartItem" class="col-lg-3 col-md-3 col-sm-3" ng-click="selectArts(artwork);">
+                                        <div class="single-product" ng-class="{'selectedborer' : selectedArt.id ==artwork.id}">
+                                            <img class="img-responsive" ng-if="artwork.file_name" src="{{baseurl}}uploads/{{artwork.user_id}}/{{artwork.art_id}}/{{artwork.file_name}}"/>
+                                            <img class="img-responsive" ng-if="!artwork.file_name" src="assets/img/ProductArchivePlaceholder.jpg"/>
+                                            <div class="product-name-price">
+                                                <p>{{artwork.name}}</p>
+                                                <h3>20% Cost Added To Print</h3>
+                                            </div>
+                                             <div class="view-artwork" ng-click="viewArtWorkDetails(artwork)">
+                                                <a data-fancybox data-src="#artwork_details" href="javascript:;" class="btn">view artwork</a>
+                                            </div>
+                                        </div>                            
+                                    </div>
+                                    <div ng-show="(cartItem |filter:size).length == 0 && cartItem.length>0" style="text-align: center;">
+                                      <span class="errorrecordnotfound">Record Not found</span>
+                                    </div>
+                                    <div style="display: none;" id="artwork_details">
+                                        <div  ng-show="artLoader" class="spinner" id="preloader"></div>
+                                        <div class="row">
+                                            <div class="col-lg-6">
+                                                <div class="viewart-image" ng-click="openImage(artWorkDetails)">
+                                                    <a data-fancybox data-src="#modalnew" href="javascript:;"><img class="img-responsive" ng-if="artWorkDetails.file_name" src="{{baseurl}}uploads/{{artWorkDetails.user_id}}/{{artWorkDetails.art_id}}/{{artWorkDetails.file_name}}"/></a>
+                                                    <img class="img-responsive" ng-if="!artWorkDetails.file_name" src="assets/img/viewart-image.jpg"/>
+                                                </div>
+                                            </div>
+                                            <div class="col-lg-6">
+                                                <div class="single-product-details">
+                                                    <h2>{{artWorkDetails.name}}</h2>
+                                                    <p>This piece adds a [mark up percentage here]% mark up to the base price of a product. <br> <br>
+                                                    Add this art to your “Art Cart” by clicking on the button below. What is an Art Cart? It’s a separate cart where you can hold the different types of art that you’d like to see what they’d look like on different products.
+                                                    <br> <br>
+                                                    The Art Cart is displayed under the main menu in the grey Page Title Bar.</p>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div style="display: none;width: unset;" id="modalnew">
+                                        <div class="row">
+                                            <div class="viewart-image">
+                                                <img class="img-responsive" ng-if="image.file_name" src="{{baseurl}}uploads/{{image.user_id}}/{{image.art_id}}/{{image.file_name}}" />
+                                                <img class="img-responsive" ng-if="!image.file_name" src="assets/img/viewart-image.jpg">
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-lg-12">
+                                        <div class="paginations" style="color: unset;">
+                                            <dir-pagination-controls max-size="5" direction-links="true" boundary-links="true" style="background-color: unset;border-color: unset;"></dir-pagination-controls>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row pb-70" style="margin:15px">
+            <div class="col-lg-12">
+                <div class="related-products">
+                    <h3>Related Product</h3>
+                </div>
+            </div>
+            <div class="col-lg-3 col-md-3 col-sm-3" ng-repeat="related in relatedProducts" ng-if="related.id!=singleProduct.id">
+                <div class="single-product">
+                    <img ng-if="related.top_layer_image" src="{{related.top_layer_image}}" class="img-responsive">
+                    <img ng-if="!related.top_layer_image" src="assets/img/ProductArchivePlaceholder.jpg" class="img-responsive">
+                    <div class="product-name-price">
+                        <p>{{related.title}}</p>
+                        <h3>${{related.price}}</h3>
+                    </div>
+                     <div class="view-artwork" ng-click="viewProductDetaisl(related)">
+                        <a data-fancybox data-src="#modarelated" href="javascript:;" class="btn">view artwork</a>
+                    </div>
+                </div>                            
+            </div>
+            <div style="display: none;" id="modarelated">
+                <div class="row">
+                    <div class="col-lg-6">
+                        <div class="viewart-image" ng-click="openImage(prodctDetails)">
+                            <a data-fancybox data-src="#modalimage" href="javascript:;"><img class="img-responsive" ng-if="prodctDetails.top_layer_image" src="{{prodctDetails.top_layer_image}}" style="width: 361px;height: 272px;" /></a>
+                            <img class="img-responsive" ng-if="!prodctDetails.top_layer_image" src="assets/img/viewart-image.jpg"/>
+                        </div>
+                    </div>
+                    <div class="col-lg-6">
+                        <div class="single-product-details">
+                            <h2>{{prodctDetails.title}}</h2>
+                            <p>This piece adds a [mark up percentage here]% mark up to the base price of a product. <br> <br>
+                            Add this art to your “Art Cart” by clicking on the button below. What is an Art Cart? It’s a separate cart where you can hold the different types of art that you’d like to see what they’d look like on different products.
+                            <br> <br>
+                            The Art Cart is displayed under the main menu in the grey Page Title Bar.</p>
+                            <a href ng-click="redirectToProduct(prodctDetails.id);" class="btn">View Prodct</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div style="display: none;width: unset;" id="modalimage">
+                <div class="row">
+                    <div class="viewart-image">
+                        <img class="img-responsive" ng-if="image.top_layer_image" src="{{image.top_layer_image}}" style="width: 361px;height: 272px;" />
+                        <img class="img-responsive" ng-if="!image.top_layer_image" src="assets/img/viewart-image.jpg"/>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!--single Product Section Start -->
+<div ng-include="'views/footer.html'"></div>
+<script type="text/javascript">
+    setTimeout(function(){
+        $('[data-fancybox]').fancybox();
+    },1500);
+</script>

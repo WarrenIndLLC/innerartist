@@ -1,0 +1,188 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <title>Title</title>
+    
+    <link href="https://fonts.googleapis.com/css?family=Lato:300,400,700|Roboto+Slab:400,700" rel="stylesheet">
+    <!-- Place favicon.ico in the root directory -->
+    <link rel="apple-touch-icon" href="apple-touch-icon.png">
+    <link rel="stylesheet" href="assets/css/normalize.css">
+    <link rel="stylesheet" href="assets/css/slicknav.min.css">
+    <link rel="stylesheet" type="text/css" href="assets/css/jquery.fancybox.min.css"/>
+    <link rel="stylesheet" href="assets/css/bootstrap.css">
+    <link rel="stylesheet" href="assets/css/font-awesome.min.css">
+    <link rel="stylesheet" href="assets/css/main.css">
+    <link rel="stylesheet" href="assets/css/responsive.css">
+    <link type="text/css" href="assets/css/jquery.mmenu.all.css" rel="stylesheet" />
+    <script src="assets/js/vendor/modernizr-2.8.3.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+    <script type="text/javascript" src="assets/js/jquery.mmenu.all.js"></script>
+
+    <script type="text/javascript" src="lib/angular/angular.min.js"></script>
+    <script type="text/javascript" src="lib/angular-animate/angular-animate.min.js"></script>
+    <script type="text/javascript" src="lib/angular-cookies/angular-cookies.min.js"></script>
+    <script type="text/javascript" src="lib/angular-resource/angular-resource.min.js"></script>
+    <script type="text/javascript" src="lib/angular-sanitize/angular-sanitize.js"></script>
+    <script type="text/javascript" src="lib/angular-ui-utils/ui-utils.min.js"></script>
+    <script type="text/javascript" src="lib/angular-route/angular-route.js"></script>
+    <script type="text/javascript" src="lib/angular-touch/angular-touch.js"></script>
+    <!--file upload -->
+    <script type="text/javascript" src="lib/ngFileUpload/ng-file-upload-shim.js"></script>
+    <script type="text/javascript" src="lib/ngFileUpload/ng-file-upload.js"></script>
+    <!-- Modules for pagination -->    
+
+    <!-- Application Init -->
+    <script type="text/javascript" src="js/services/httpService.js"></script>
+    <script type="text/javascript" src="js/app.js"></script>
+
+    <!-- Application Controllers -->
+    <script type="text/javascript" src="js/controller/controller.js"></script>
+    <script src="lib/angularUtils-pagination/dirPagination.js"></script>
+    <style type="text/css">
+        #preloader{
+            position: fixed;
+            background: url(img/default.gif);
+            width: 50px;
+            height: 50px;
+            top: 50%;
+            left: 50%;
+            margin-left: -25px;
+            z-index: 9999999;
+            background-repeat: no-repeat;
+            margin-top: -25px;
+            background-size: 100%;
+        }
+        #loader_bg{
+            position: fixed;
+            background: #000;
+            z-index: 999;
+            width: 100%;
+            height: 100%;
+            opacity: 0.3;
+        }
+        .mainmenu ul li a {
+            font-size: 23px;
+        }
+        .mainmenu ul li a {
+            padding: 1px 0px 0px 37px;
+        }
+.errorrecordnotfound{
+    text-align: center !important;
+    color: #e3661f !important;
+    font-size: 18px !important;
+}</style>
+    </head>
+    <body ng-app="mainApp" ng-controller="mainController">
+        <div  ng-show="loader" class="spinner" id="preloader"></div>
+        <div id="loader_bg" ng-show="loader"></div>
+
+        <div class="mobile-button">
+            <img id="menu-button" class="hidden-lg hidden-md hidden-sm " src="assets/img/hamburger.png">
+        </div>
+        <div class="top-bar-section">
+            <div class="container">
+                <div class="row">
+                    <div class="col-lg-6 col-md-6 col-sm-6">
+                        <div class="top-bar-left">
+                            <ul>
+                                <li><a href><img class="img-responsive" src="assets/img/Facebook.png" alt="image"/></a></li>
+                                <li><a href><img class="img-responsive" src="assets/img/Twitter.png" alt="image"/></a></li>
+                                <li><a href><img class="img-responsive" src="assets/img/Instagram.png" alt="image"/></a></li>
+                                <li><a href><img class="img-responsive" src="assets/img/Pintrest.png" alt="image"/></a></li>
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="col-lg-6 col-md-6 col-sm-6">
+                        <div class="top-bar-right">
+                            <ul>
+                                <li><a href><img class="img-responsive" src="assets/img/Search.png" alt="image"/></a></li>
+                                <li class="submenu">
+                                    <a><img class="img-responsive" src="assets/img/Contact.png" alt="image"/></a>
+                                    <div class="dropdown-content">
+                                        <a  href="#/contact">Contact Us</a>
+                                    </div>
+                                </li>
+                                <li>
+                                    <a href="#/favourite" >
+                                        <img class="img-responsive" src="assets/img/Favorites.png" alt="image"/>
+                                    </a>
+                                </li>
+                                <!-- <li ng-if="!authUser"> 
+                                    <a href="{{baseurl}}#/login">
+                                        <img class="img-responsive" src="assets/img/Favorites.png" alt="image"/>
+                                    </a>
+                                </li> -->
+
+                                <li class="submenu"><!--  ng-if="authUser" -->
+                                    <a href="#/cart"><img class="img-responsive" src="assets/img/Cart.png" alt="image"/></a>
+                                    <div ng-if="productCart.length>0" class="dropdown-content">
+                                        <div ng-repeat="cart in productCart" style="float:left;width:100%;border-bottom:1px solid #CCC">
+                                            <a href="#/cart" style="float:left">
+                                                <img ng-if="cart.top_layer_image" src="{{cart.top_layer_image}}" style="width: 20%;float:left;padding-top: 2px;"/>
+                                                <img ng-if="!cart.top_layer_image" src="assets/img/ProductArchivePlaceholder.jpg" style="width: 20%;float:left;padding-top: 2px;"/>
+                                                <p style="padding-left: 10px;width: 79%;float: right;font-size: 10px;">{{cart.title}}</p>
+                                            </a>
+                                        </div>
+                                    </div>
+                                </li>
+                                <!-- <li ng-if="!authUser"><a href="{{baseurl}}#/login"><img class="img-responsive" src="assets/img/Cart.png" alt="image"/></a></li> -->
+                                <li><a href="{{baseurl}}#/login" ng-if="!authUser"><span>login</span></a></li>
+                                <ul class="nav navbar-nav navbar-right" ng-if="authUser">
+                                    <li class="logged-in-container" data-toggle="dropdown" style="padding-left: 0;">
+                                        <div class="dropdown">
+                                            <img ng-if="authUser.avatar_url" ng-src="{{authUser.avatar_url}}" style="height: 30px;width: 30px;border-radius: 30px;margin-top: -5px;" />
+                                            <img ng-if="!authUser.avatar_url" ng-src="assets/img/UserPlaceholder1.png" style="height: 30px;width: 30px;border-radius: 30px;margin-top: -5px;" />
+                                            <a href="{{baseurl}}#/dashboard" style="font-weight: 600;color: black;">{{authUser.first_name}}</a>
+                                        </div>
+                                    </li>
+                                </ul>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="main-menu-section">
+            <div class="container">
+                <div class="row">
+                    <div class="col-lg-3 col-md-3 col-sm-3">
+                        <div class="logo">
+                            <a href="#/"><img class="img-responsive" src="assets/img/logo.png" alt="image"/></a>
+                        </div>
+                    </div>
+                    <div class="col-lg-9  col-md-9 col-sm-9">
+                        <nav id="menu" class="hide" style="    font-size: 23px;">
+                            <ul>
+                                <a class="close-menu" href><img class="img-responsive" src="assets/img/cross-menu.png" alt="image"/></a>
+                                <li><a href="{{baseurl}}#/dashboard/albums/">Create Artwork</a></li>
+                                <li><a href="#/artwork" ng-class="{'activemenus' : title =='artwork'}">Shop Artwork</a></li>
+                                <li><a href="#/products" ng-class="{'activemenus' : title =='products'}">Shop Products</a></li>
+                                <li><a href="#/help" ng-class="{'activemenus' : title =='help'}">help</a></li>
+                            </ul>                                
+                        </nav>
+                        <div class="mainmenu" >
+                            <ul>
+                                <li><a href="{{baseurl}}#/dashboard/albums/">Create Artwork</a></li>
+                                <li><a href="#/artwork" ng-class="{'activemenus' : title =='artwork'}">Shop Artwork</a></li>
+                                <li><a href="#/products" ng-class="{'activemenus' : title =='products'}">Shop Products </a></li>
+                                <li><a href="#/help"ng-class="{'activemenus' : title =='Help'}">help</a></li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div ng-view></div>
+    </body>
+    <script type="text/javascript" src="js/common.js"></script>
+    <script type="text/javascript" src="js/directives/directive.js"></script>
+    <script type="text/javascript" src="assets/slick/slick.min.js"></script>
+    <script type="text/javascript" src="assets/js/jquery.fancybox.min.js"></script>
+    <script src="assets/js/bootstrap.min.js"></script>
+    <script src="assets/js/plugins.js"></script>
+    <script src="assets/js/main.js"></script>
+</html>

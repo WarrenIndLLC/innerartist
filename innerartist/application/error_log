@@ -1,0 +1,1 @@
+[12-Jan-2018 15:36:58 UTC] PHP Fatal error:  Allowed memory size of 536870912 bytes exhausted (tried to allocate 60000 bytes) in /home/codetechnofox/public_html/innerartist/application/vendor/intervention/image/src/Intervention/Image/Gd/Driver.php on line 36

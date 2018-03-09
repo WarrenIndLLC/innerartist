@@ -1,0 +1,104 @@
+<div ng-include="'views/header.html'"></div>
+  <div class="artist-seller-section">
+    <div class="container">
+      <div class="row">
+        <div class="col-lg-12">
+          <div class="artist-seller-top">
+            <p>Apply to become an Artist Seller (Vendor) but filling out the information below. Artist Vendors make 80% commission from the percentage markup their artwork adds when it’s ordered to be printed. Apply today and start earning!</p>
+          </div>
+        </div>
+        <form method="post">
+          <div class="col-lg-6 col-md-6 col-sm-6">
+            <div class="artist-seller-left">
+              <h2>Residential Address</h2>
+              <div class="form-group">
+                <label for="lname">*Street Address</label>
+                <input type="text" id="residential_street_add" class="form-control" ng-model="vendorFormdata.residential_street_add">
+              </div>
+              <div class="form-group">
+                <label for="lname">Line2(optional)</label>
+                <input type="text" id="residential_line2" class="form-control" ng-model="vendorFormdata.residential_line2">
+              </div>
+              <div class="form-group">
+                <label for="city">*City or town</label>
+                <input type="text" placeholder="" id="residential_city" class="form-control" ng-model="vendorFormdata.residential_city">
+              </div>
+              <div class="form-group width-half">
+                <label for="city">*Zip or post code</label>
+                <input type="text" placeholder="" id="residential_zipcode" class="form-control" ng-model="vendorFormdata.residential_zipcode">
+              </div>
+              <div class="form-group width-half">
+                <label for="city">State or providence</label>
+                <input type="text" placeholder="" id="residential_state" class="form-control" ng-model="vendorFormdata.residential_state">
+              </div>
+              <div class="form-group  width-half">
+                <label for="state">*Country</label>
+                <select class="form-control" id="residential_country" ng-model="vendorFormdata.residential_country">
+                  <option>United States(US)</option>
+                  <option>Option One</option>
+                  <option>Option Two</option>
+                </select>
+              </div>   
+              <h2>Postal Address</h2>
+              <div class="form-group">
+                <label for="lname">*Street Address</label>
+                <input type="text" placeholder="" id="postal_street_add" class="form-control" ng-model="vendorFormdata.postal_street_add">
+              </div>
+              <div class="form-group">
+                <label for="lname">Line2(optional)</label>
+                <input type="text" placeholder="" id="postal_line2" class="form-control" ng-model="vendorFormdata.postal_line2">
+              </div>
+              <div class="form-group">
+                <label for="city">*City or town</label>
+                <input type="text" placeholder="" id="postal_city" class="form-control" ng-model="vendorFormdata.postal_city">
+              </div>
+              <div class="form-group width-half">
+                <label for="city">*Zip or post code</label>
+                <input type="text" placeholder="" id="postal_zipcode" class="form-control" ng-model="vendorFormdata.postal_zipcode">
+              </div>
+              <div class="form-group width-half">
+                <label for="city">State or providence</label>
+                <input type="text" placeholder="" id="postal_state" class="form-control" ng-model="vendorFormdata.postal_state">
+              </div>
+              <div class="form-group  width-half">
+                <label for="state">*Country</label>
+                <select class="form-control" id="postal_country" ng-model="vendorFormdata.postal_country">
+                  <option value="">Select Country</option>
+                  <option value="United States">United States</option>
+                  <option value="Canada">Canada</option>
+                </select>
+              </div>   
+            </div>
+          </div>
+          <div class="col-lg-6 col-md-6 col-sm-6">
+            <div class="artist-seller-right">
+              <h2>Getting Paid</h2>
+              <div class="form-group">
+                <label for="payment_currency">Payment currency <br><span>I want to be paid in</span></label>                                   
+                <select class="form-control" id="payment_currency" ng-model="vendorFormdata.payment_currency">
+                  <option value="Paypal">Canadian dollars(CAD)-Paypal</option>
+                  <option value="one">Option One</option>
+                  <option value="one">Option Two</option>
+                </select>
+                <em><span>Pelase be careful, as this <strong>cannot be changed later.</strong></span></em>
+              </div>
+              <div class="form-group">
+                <label for="paypal_email">Paypal email address</label>
+                <input type="email" class="form-control" id="paypal_email" placeholder="donny_wells@hotmail.com" ng-model="vendorFormdata.paypal_email">
+              </div>
+              <!-- <div class="checkbox">
+                <p>User Agreement</p>
+                <label>
+                  <input type="checkbox">Yes I agree to <span class="checkbox-text">Inner Artist Treams Of Service</span>
+                </label>
+              </div> -->
+              <div class="submit-btn">
+                <button class="md-primary md-raised" type="button"  ng-click="addVendor()">submit application</button>
+              </div>
+            </div>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+<div ng-include="'views/footer.html'"></div>

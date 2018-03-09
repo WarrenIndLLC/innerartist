@@ -1,0 +1,175 @@
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script> 
+  <div id="myCarousel" class="carousel slide" data-ride="carousel" >
+    <ol class="carousel-indicators">
+      <li data-target="#myCarousel" data-slide-to="0" class="active"></li>
+      <li data-target="#myCarousel" data-slide-to="1"></li>
+      <li data-target="#myCarousel" data-slide-to="2"></li>
+      <li data-target="#myCarousel" data-slide-to="3"></li>
+    </ol>
+    <div class="carousel-inner" style="max-height: 600px;">
+
+      <div class="item active">
+        <img src="assets/img/Slider1.jpg" alt="Los Angeles" style="width:100%;">
+      </div>
+
+      <div class="item">
+        <img src="assets/img/Slider2.jpg" alt="Chicago" style="width:100%;">
+      </div>
+    
+      <div class="item">
+        <img src="assets/img/Slider3.jpg" alt="New York" style="width:100%;">
+      </div>
+  
+     <div class="item">
+        <img src="assets/img/Slider4.jpg" alt="New York" style="width:100%;">
+      </div>
+    <a class="left carousel-control" href="#myCarousel" data-slide="prev">
+      <span class="glyphicon glyphicon-chevron-left"></span>
+      <span class="sr-only">Previous</span>
+    </a>
+    <a class="right carousel-control" href="#myCarousel" data-slide="next">
+      <span class="glyphicon glyphicon-chevron-right"></span>
+      <span class="sr-only">Next</span>
+    </a>
+  </div>
+</div>
+
+<div class="new-design-section" >
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-12">
+                <div class="new-design">
+                    <h3>NEW DESIGNS FROM ARTISTS LIKE YOU</h3>
+                    <h1>YOUR GRAND ENTRANCE</h1>
+                    <p>Our artists earn by creating and selling artwork through Inner Artist. People are creating artwork right and and you can too. <a ng-if="!authUser" href="{{baseurl}}#/login">Apply today</a> <a ng-if="authUser" href="#/apply-today">Apply today</a> to be an artist vendor to earn.". </p>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-lg-12">
+                <div class="latest-creation-heading">
+                    <h3>LATEST CREATIONS</h3>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-lg-3 col-md-3 col-sm-3" ng-repeat="artworks in artwork">
+                <div class="single-latestcreation">
+                    <p>{{artworks.datetime}}</p>
+                    <div class="artimage">
+                        <img class="img-responsive" ng-if="artworks.file_name" src="{{baseurl}}uploads/{{artworks.user_id}}/{{artworks.id}}/{{artworks.file_name}}" alt="image"/>
+                        <img class="img-responsive" ng-if="!artworks.file_name" src="assets/img/Placeholder1.jpg " alt="image"/>
+                    </div>
+                    <div class="user clearfix">
+                        <div class="user-image">
+                            <img class="img-responsive" ng-if="artworks.avatar_url" src="{{artworks.avatar_url}}" alt="image" style="border-radius: 70px;height: 30px;width: 30px;"/>
+                            <img class="img-responsive" ng-if="!artworks.avatar_url" src="assets/img/UserPlaceholder1.png" alt="image"/>
+                        </div>
+                        <div class="user-details">
+                            <H3 style="margin:0">{{artworks.first_name}} {{artworks.last_name}}</H3>
+                            <h5 style="margin-top: 0;">{{artworks.address}}</h5>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="row">
+            <div class="col-lg-12">
+                <div class="get-inspired-heading">
+                    <h3>GET INSPIRED</h3>
+                    <h1>GIVING POWER TO THE ARTIST.</h1>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-lg-4 col-md-4 col-sm-4" ng-repeat="post in blogs">
+                <div class="blog-post">
+                    <div class="blog-images">
+                        <img class="img-responsive imgwidth" ng-if="post.image" src="assets/img/{{post.image}}" alt="image"/>
+                        <img class="img-responsive imgwidth" ng-if="!post.image" src="assets/img/BlogPlaceholder.jpg" alt="image"/>
+                    </div>
+                    <div class="blog-post-details">
+                        <h2>{{post.title}}</h2>
+                        <p>{{post.description}}</p>
+                        <a href style="float: left;text-align: right;margin-left: 70px;"> <img class="img-responsive" src="assets/img/arrow.jpg" alt="image" style="float: left;padding-right: 10px;margin-top: 7px;"> Read More</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!--New Design Section Start -->
+<!--Create-place-print Section Start -->
+<div class="create-print-section">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-12">
+                <div class="create-place-print-headinng">
+                    <h1>CREATE. PLACE. PRINT</h1>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-lg-6 col-md-6 col-sm-6">
+                <div class="banner-image">
+                    <a href><img class="img-responsive imgwidth" src="assets/img/BannerPlaceholder.jpg" alt="image"/></a>
+                </div>
+            </div>
+            <div class="col-lg-6 col-md-6 col-sm-6">
+                <div class="banner-image">
+                      <a href><img class="img-responsive imgwidth" src="assets/img/BannerPlaceholder.jpg" alt="image"/></a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!--Create-place-print Section Start -->
+
+<!--Shop By Artist Section Start -->
+<div class="shop-artist-section">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-12">
+                <div class="shop-artist-heading">
+                    <h2>Shop by Artist</h2>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-lg-4 col-md-4 col-sm-4" ng-repeat="randomUsers in randomUser">
+                <div class="artist">
+                    <div class="artist-id clearfix">
+                        <div class="artist-image clearfix">
+                            <a href="#/artwork/{{randomUsers.id}}">
+                                <img alt="image" ng-if="randomUsers.avatar_url" src="{{randomUsers.avatar_url}}" class="img-responsive" style="border-radius: 70px;height: 50px;width: 50px;">
+                                <img alt="image" ng-if="!randomUsers.avatar_url" src="assets/img/UserPlaceholder2.png" class="img-responsive">
+                            </a>
+                        </div>
+                        <div class="artist-details clearfix">
+                            <p><a href>{{randomUsers.first_name}} {{randomUsers.last_name}}</a></p>
+                            <p>{{randomUsers.address}}</p>
+                        </div>
+                    </div>
+                    <div class="artimage">
+                        <img class="img-responsive imgwidth" ng-if="randomUsers.file_name" src="{{baseurl}}uploads/{{randomUsers.id}}/{{randomUsers.photo_id}}/{{randomUsers.file_name}}" alt="image" style="    height: 100%;" />
+                        <img class="img-responsive imgwidth" ng-if="!randomUsers.file_name" src="assets/img/Placeholder1.jpg " alt="image" style="    height: 100%;"/>
+                    </div>
+                    <div class="view-gallery">
+                        <a href>view artist gallery</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div ng-include="'views/footer.html'"></div>
+<script type="text/javascript">
+$('#myCarousel').carousel({
+    interval: 5000,
+    cycle: true
+}); 
+
+</script>

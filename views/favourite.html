@@ -1,0 +1,29 @@
+
+<div ng-include="'views/header.html'"></div>   
+<div class="breadcumb-section" style="padding: 50px 0 0;">
+    <div class="container">
+        <div class="row">
+            <div dir-paginate="favArtworks in favArtwork |itemsPerPage:12" ng-show="favArtworks" class="col-lg-3 col-md-3 col-sm-3">
+                <div class="single-product">
+                    <div class="artimage">
+                        <img class="img-responsive" src="{{baseurl}}uploads/{{favArtworks.user_id}}/{{favArtworks.id}}/{{favArtworks.file_name}}"/>
+                    </div>
+                    <div class="product-name-price">
+                        <p>{{favArtworks.name}}</p>
+                        <h3>20% Cost Added To Print</h3>
+                    </div>
+                    <div class="view-artwork" ng-click="openArtWork(favArtworks)">
+                        <a data-fancybox data-src="#artDetailsModel" href="javascript:;" class="btn">view artwork</a>
+                    </div>
+                </div>                            
+            </div>
+            <div ng-if="favArtwork.length==0" class="errorrecordnotfound">Record not found</div>
+            <div class="col-lg-12">
+                <div class="paginations">
+                    <dir-pagination-controls max-size="5" direction-links="true" boundary-links="true"></dir-pagination-controls>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div ng-include="'views/footer.html'"></div>

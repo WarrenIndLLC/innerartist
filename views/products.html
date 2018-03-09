@@ -1,0 +1,61 @@
+<div ng-include="'views/header.html'"></div>
+<div class="breadcumb-section" style="padding: 0 0 70px;">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-12">
+                <div class="product-breadcumbs">
+                    <ol class="breadcrumb">
+                         <img class="img-responsive" src="assets/img/filter.jpg" alt="image"/>
+                      <li><a href>Filter Products</a></li>
+                      <li class="active">Showing 1-8 of 30 results</li>
+                    </ol>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-lg-6 col-md-6 col-sm-6">
+               <div class="product-filter">
+                   <div class="form-group">
+                      <select class="form-control" ng-model="filter.category">
+                        <option value="">Sort by Categories</option>
+                        <option ng-repeat="r in category" value="{{r.id}}">{{r.category}}</option>
+                      </select>
+                    </div>
+               </div>                                
+            </div>
+            <div class="col-lg-6 col-md-6 col-sm-6">
+               <div class="product-filter">
+                   <div class="form-group">
+                      <select class="form-control"  ng-model="size" ng-change="changePrice();">
+                        <option>Price Range</option>
+                        <option value="ASC">Low to Hight</option>
+                        <option value="DESC">High to low</option>
+                      </select>
+                    </div>
+               </div>                                
+            </div>
+        </div>
+        <div class="row">
+            <div dir-paginate="product in products | searchFilter:filter.category | itemsPerPage:12 | orderBy:filter.price:priceFilterExp" ng-show="product" class="col-lg-3 col-md-3 col-sm-3" style="    margin-bottom: 70px;">
+                <div class="single-product" style="height: 380px;">
+                    <div class="sale" ng-if="product.is_sale==1">
+                        <p>sale</p>
+                    </div>
+                    <img class="img-responsive" ng-if="product.top_layer_image" src="{{product.top_layer_image}}" style="width: 285px;height: 357px;" />
+                    <img class="img-responsive" ng-if="!product.top_layer_image" src="assets/img/ProductArchivePlaceholder.jpg"/>
+                    <div class="product-name-price">     
+                        <p>{{product.title}}</p>
+                        <h3>${{product.price}}</h3>
+                    </div>
+                    <div class="view-artwork">
+                        <a href="#/products/{{product.id}}">view product</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div>
+            <dir-pagination-controls max-size="5" direction-links="true" boundary-links="true"></dir-pagination-controls>
+        </div>
+    </div>
+</div>
+<div ng-include="'views/footer.html'"></div>
